@@ -3,7 +3,7 @@ import {createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
 
 // Lazy-loaded screens
 const Dashboard = lazy (() => import ('./screens/Dashboard.jsx'));
-const Listening = lazy (() => import ('./screens/Listening.jsx'));
+const Speaking = lazy (() => import ('./screens/Speaking.jsx'));
 const NotFound = lazy (() => import ('./screens/NotFound.jsx'));
 
 const Loader = () => (
@@ -13,7 +13,7 @@ const Loader = () => (
 const router = createBrowserRouter ([
   {path: '/', element: <Navigate to="/dashboard" replace />},
   {path: '/dashboard', element: <Dashboard />},
-  {path: '/listening', element: <Listening />},
+  {path: '/speaking', element: <Speaking />},
   {path: '*', element: <NotFound />},
 ]);
 
