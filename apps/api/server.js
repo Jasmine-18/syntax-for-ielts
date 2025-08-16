@@ -22,6 +22,7 @@ app.use (express.json ()); // Middleware to parse JSON request bodies
 app.use ('/api/auth', authRoutes);
 app.use ('/api/speaking', speakingRoutes);
 app.use ('/api/evaluate', evaluateRoutes);
+app.get ('/', 'Welcome to the IELTS Speaking API!');
 
 // Define the port the server will listen on.
 const PORT = process.env.PORT || 3000;
