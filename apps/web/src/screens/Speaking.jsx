@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 
 // --- Constants ---
-const API_BASE_URL = 'http://localhost:3000/api'; // Ensure this matches your backend server address
+const API_BASE_URL = 'http://syntax-for-ielts-3bg8.vercel.app/api'; // Ensure this matches your backend server address
 const FULL_DASH_ARRAY = 283; // For the timer circle animation
 
 // --- Helper Components ---
