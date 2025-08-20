@@ -7,8 +7,8 @@ const {z} = require ('zod');
 // --- Model Initialization ---
 const model = new ChatGoogleGenerativeAI ({
   apiKey: process.env.GOOGLE_API_KEY,
-  model: 'gemini-2.5-flask',
-  temperature: 0.5, // Lower temperature for more consistent, factual evaluation
+  model: 'gemini-2.5-flash',
+  temperature: 1, // Lower temperature for more consistent, factual evaluation
 });
 
 // --- Evaluation Parser Definition ---

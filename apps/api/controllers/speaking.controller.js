@@ -20,7 +20,7 @@ const parser = StructuredOutputParser.fromZodSchema (
 const model = new ChatGoogleGenerativeAI ({
   apiKey: process.env.GOOGLE_API_KEY,
   model: 'gemini-2.5-flash',
-  temperature: 1, // Controls the randomness of the output
+  temperature: 1.25, // Controls the randomness of the output
 });
 
 // --- Part 1: Introduction and Interview ---

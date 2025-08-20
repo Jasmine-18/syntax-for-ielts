@@ -11,7 +11,7 @@ const Loader = () => (
 );
 
 const router = createBrowserRouter ([
-  {path: '/', element: <Navigate to="/dashboard" replace />},
+  {path: '/', element: <Navigate to="/speaking" replace />},
   {path: '/dashboard', element: <Dashboard />},
   {path: '/speaking', element: <Speaking />},
   {path: '*', element: <NotFound />},

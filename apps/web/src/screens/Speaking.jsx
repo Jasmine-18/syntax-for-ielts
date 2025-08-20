@@ -149,6 +149,8 @@ export default function App () {
   const [evaluation, setEvaluation] = useState (null);
   const [timer, setTimer] = useState ({duration: 0, timeLeft: 0});
   const [liveTranscript, setLiveTranscript] = useState ('');
+  const [isEvaluating, setIsEvaluating] = useState (false);
+  const [evaluationError, setEvaluationError] = useState (null);
 
   const mediaRecorderRef = useRef (null);
   const audioStreamRef = useRef (null);
@@ -173,6 +175,7 @@ export default function App () {
         runPart2 ();
       }
     } else if (currentPart === 2) {
+      console.log ('runPart3');
       runPart3 ();
       finishTest (updatedHistory);
     } else if (currentPart === 3) {
@@ -190,14 +193,54 @@ export default function App () {
       instruction: 'Please wait while we generate your evaluation.',
     });
     setTestState ('finished');
+
+    setIsEvaluating (true);
+    setEvaluation (null);
+    setEvaluationError (null);
+
     try {
       const evalData = await submitForEvaluation (finalHistory);
+
+      if (!evalData || evalData.error || evalData.message) {
+        const msg =
+          evalData.error || evalData.message || 'Unknown evaluation error.';
+        throw new Error (msg);
+      }
+
       setEvaluation (evalData);
     } catch (error) {
       console.error ('Evaluation failed:', error);
-      setEvaluation ({
-        error: 'Sorry, an error occurred while generating your report.',
-      });
+      setEvaluationError (error.message);
+    } finally {
+      setIsEvaluating (false);
+    }
+  };
+
+  const retryEvaluation = async () => {
+    setStatus ({
+      title: 'Retrying evaluation…',
+      instruction: 'Re-evaluating your responses.',
+    });
+
+    setIsEvaluating (true);
+    setEvaluation (null);
+    setEvaluationError (null);
+
+    try {
+      const evalData = await submitForEvaluation (conversationHistory);
+
+      if (!evalData || evalData.error || evalData.message) {
+        const msg =
+          evalData.error || evalData.message || 'Unknown evaluation error.';
+        throw new Error (msg);
+      }
+
+      setEvaluation (evalData);
+    } catch (error) {
+      console.error ('Retry evaluation failed:', error);
+      setEvaluationError (error.message);
+    } finally {
+      setIsEvaluating (false);
     }
   };
 
@@ -459,16 +502,22 @@ export default function App () {
         headers: {'Content-Type': 'application/json'},
         body: body ? JSON.stringify (body) : null,
       };
-      const response = await fetch (`${API_BASE_URL}${endpoint}`, options);
-      if (!response.ok)
-        throw new Error (`HTTP error! status: ${response.status}`);
-      return await response.json ();
+
+      const res = await fetch (`${API_BASE_URL}${endpoint}`, options);
+      let data = null;
+      data = await res.json ();
+
+      if (!res.ok) {
+        // Prefer API message if available
+        const message = data.message || `HTTP error! status: ${res.status}`;
+        return {error: message, status: res.status};
+      }
+      return data;
     } catch (error) {
       console.error (`Failed to fetch from ${endpoint}:`, error);
-      alert (
-        `Error: Could not load data for the test. Please ensure the backend server is running.`
-      );
-      return null;
+      return {
+        error: 'Network error. Please ensure the backend server is running.',
+      };
     } finally {
       setIsLoading (false);
     }
@@ -566,7 +615,32 @@ export default function App () {
                 &times;
               </button>
             </div>
-            <EvaluationReport data={evaluation} />
+            {isEvaluating
+              ? <LoadingSpinner message="Generating your evaluation..." />
+              : evaluationError
+                  ? <div className="space-y-4">
+                      <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+                        <p className="font-semibold">Evaluation Error</p>
+                        <p className="mt-1">
+                          {evaluationError}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-end gap-3">
+                        <button
+                          onClick={() => window.location.reload ()}
+                          className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
+                        >
+                          Close
+                        </button>
+                        <button
+                          onClick={retryEvaluation}
+                          className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                          Retry
+                        </button>
+                      </div>
+                    </div>
+                  : <EvaluationReport data={evaluation} />}
           </div>
         </div>}
     </div>
