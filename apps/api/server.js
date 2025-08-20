@@ -13,6 +13,23 @@ const app = express ();
 // This function will handle connecting to MongoDB and log the status.
 connectDB ();
 
+// CORS
+const ALLOWED_ORIGINS = ['https://syntax-for-ielts.vercel.app', 'http://localhost:5173'];
+
+const corsOptions = {
+  origin(origin, cb) {
+    // allow server-to-server / curl with no Origin
+    if (!origin) return cb(null, true);
+    return ALLOWED_ORIGINS.includes(origin)
+      ? cb(null, true)
+      : cb(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false,          // set true ONLY if you need cookies/auth headers in the browser
+  maxAge: 86400,
+};
+
 // Middleware
 app.use (cors ());
 app.use (express.json ()); // Middleware to parse JSON request bodies
