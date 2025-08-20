@@ -177,7 +177,6 @@ export default function App () {
     } else if (currentPart === 2) {
       console.log ('runPart3');
       runPart3 ();
-      finishTest (updatedHistory);
     } else if (currentPart === 3) {
       if (currentQuestionIndex < testData.part3.questions.length - 1) {
         setCurrentQuestionIndex (currentQuestionIndex + 1);

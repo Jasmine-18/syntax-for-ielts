@@ -1,43 +1,43 @@
-# 🎤 Syntax for IELTS  
+# Syntax for IELTS  
 
 [![Website](https://img.shields.io/badge/Live-Demo-blue?style=flat&logo=vercel)](https://syntax-for-ielts.vercel.app/)  
-An **AI-powered IELTS Speaking test simulator** that feels like the real exam — except you can practice anytime, anywhere.
+An AI-powered IELTS Speaking test simulator that feels like the real exam — except you can practice anytime, anywhere.
 
 👉 Try it now: [https://syntax-for-ielts.vercel.app/](https://syntax-for-ielts.vercel.app/)
 
 ---
 
-## ✨ What’s Inside
+## What’s Inside
 
-- 🧑‍🏫 **Full Speaking Test Flow** — Part 1 (Intro), Part 2 (Cue Card), Part 3 (Discussion)  
-- 🎙 **Voice Recording + Live Transcription** — answers captured in real time with the Web Speech API  
-- ⏱ **Animated Timers** — practice under real exam pressure  
-- 🤖 **AI Evaluation Report** — powered by LangChain + Google Gemini  
+- Full Speaking Test Flow — Part 1 (Intro), Part 2 (Cue Card), Part 3 (Discussion)  
+- Voice Recording + Live Transcription — answers captured in real time with the Web Speech API  
+- Animated Timers — practice under real exam pressure  
+- AI Evaluation Report — powered by LangChain + Google Gemini  
   - Fluency & Coherence  
   - Lexical Resource  
   - Grammatical Range & Accuracy  
   - Pronunciation (text-inferred)  
-- 📊 **Band Score + Suggestions** — actionable feedback to level up your IELTS performance  
-- 🔄 **Retry Evaluation** — regenerate your report if something goes wrong  
+- Band Score + Suggestions — actionable feedback to level up your IELTS performance  
+- Retry Evaluation — regenerate your report if something goes wrong  
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 **Frontend**  
-- React (Vite) ⚛️  
-- TailwindCSS 🎨  
-- Web Speech API (Speech-to-Text) 🎤  
+- React (Vite)  
+- TailwindCSS  
+- Web Speech API (Speech-to-Text)  
 
 **Backend**  
-- Node.js + Express 🚀  
-- MongoDB 🍃  
-- LangChain 🧩  
-- Google Generative AI (Gemini) ✨  
+- Node.js + Express  
+- MongoDB  
+- LangChain  
+- Google Generative AI (Gemini)  
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Clone the repo
 ```bash
